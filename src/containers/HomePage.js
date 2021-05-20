@@ -1,43 +1,40 @@
 import React from 'react';
 import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import history from '../history';
+//import { getMovements } from '../actions/index';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { useSelector }  from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
-    homeHeader: {
-        background: '#C4C4C4',
-        textAlign: 'center',
-        boxShadow: '0px 2px 2px #A9A9A9',
-        fontFamily: 'PT Sans Caption',
-        fontSize: '36px',
-        marginBottom: '20px',
-        paddingTop: '20px',
-        textTransform: 'uppercase',
-        position: 'fixed',
-        top: 0,
-        width: '100%',
+    homePageContent: {
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
+    },
+    noMovementsMessage: {
+        marginTop: '130px',
+        fontFamily: 'PT Sans Caption',
+        fontSize: '20px',
+        textTransform: 'uppercase',
     },
     movementButtons: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
         fontFamily: 'PT Sans Caption',
-        textTransform: 'uppercase',
-        marginTop: '100px'
+        marginTop: '100px',
+        borderRadius: '10px',
+        background: '#C4C4C4',
+        boxShadow: '0px 2px 2px #A9A9A9',
     },
     movementName: {
-        background: '#C4C4C4',
         fontFamily: 'PT Sans Caption',
-        fontSize: '18px',
-        borderRadius: '10px',
+        fontSize: '20px', 
         padding: '10px',
-        marginTop: '30px',
-        width: '100%',
+        paddingLeft: '200px',
+        paddingRight: '200px',
     },
     fabDiv: {
         display: 'flex',
@@ -53,10 +50,28 @@ const useStyles = makeStyles((theme) => ({
 
 const HomePage = () => {
     const classes = useStyles();
+    const name  = useSelector(state => state.name);
+    const displayMovementButtons = () => {
+        console.log(name, "name");
+        if (name !== undefined) {
+            
+            return (
+                <Button 
+                    className={classes.movementButtons}
+                    onClick={() => history.push('/movement/:id')}
+                >   
+                    <div className={classes.movementName} >{name}</div>
+                </Button>
+            )
+        }; 
+
+        return <div className={classes.noMovementsMessage} >Click add button to begin</div>
+    };
 
     return (
-        <div>
+        <div className={classes.homePageContent} >
             <Header title={"Home Page" }/>
+            <div>{displayMovementButtons()}</div>
             <div className={classes.fabDiv}>
                 <Fab 
                     className={classes.fab}
@@ -67,4 +82,15 @@ const HomePage = () => {
         </div>
     );
 };
- export default HomePage;
+
+const mapStateToProps = (state) => {
+    return {
+        name: state.move.name,  
+    }   
+};
+
+const withConnect = connect(
+    mapStateToProps,
+);
+
+export default compose(withConnect)(HomePage);
