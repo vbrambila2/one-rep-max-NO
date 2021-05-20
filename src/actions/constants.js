@@ -1,2 +1,2 @@
-export const GET_MOVEMENT = 'GET_MOVEMENT';
+export const GET_MOVEMENTS = 'GET_MOVEMENTS';
 export const ADD_MOVEMENT = 'ADD_MOVEMENT';

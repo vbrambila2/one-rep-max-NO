@@ -3,13 +3,12 @@ import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import history from '../history';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { addMovement } from '../actions/index';
-import { useDispatch}  from 'react-redux'
+import { useDispatch }  from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     addPage: {
@@ -41,21 +40,19 @@ const useStyles = makeStyles((theme) => ({
         padding: '10px',
       },
       addButton: {
-          background: '#E7E7E7',
           width: '50px',
           borderRadius: '10px',
           marginLeft: '95px'
       },
 }));
 
-const AddPage = (props) => {
+const AddPage = () => {
     const [name, setName] = useState('');
     const [weight, setWeight] = useState(0);
+    // const name = useSelector(state => state.move.name);
+    // const weight = useSelector(state => state.move.weight);
     const classes = useStyles();
-    const onSubmit = () => {
-        addMovement();
-    };
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     console.log(name, weight);
 
@@ -73,7 +70,9 @@ const AddPage = (props) => {
                         onChange={event => {
                             const { value } = event.target;
                             setName(value);
-                        }} 
+                        }}
+                         
+                        
                          />    
                     <TextField 
                         className={classes.movementWeight} 
@@ -85,14 +84,16 @@ const AddPage = (props) => {
                             const { value } = event.target;
                             setWeight(value);
                         }}
+                        
                         InputProps= {{endAdornment: <InputAdornment position="end">lb</InputAdornment>, className: "textBoxColor"}} />
-                    <Button 
+                    <Link 
+                        to={`/`}
                         className={classes.addButton}
                         variant="outlined"
-                        onClick={() => dispatch(addMovement(setName, setWeight))}
+                        onClick={() => dispatch(addMovement(name, weight))}
                         >
                         <AddCircleIcon />
-                    </Button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -101,20 +102,20 @@ const AddPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        newName: state.name,
-        newWeight: state.weight,
-    }
+        name: state.move.name,
+        weight: state.move.weight,   
+    }   
 };
 
 const mapDispatchToProps = (dispatch) => {
     return({
-        addMovement: (response) => dispatch(addMovement(response))
+        addMovement: (name, weight) => dispatch(addMovement(name, weight)),
     })
-}
+};
 
 const withConnect = connect(
     mapStateToProps,
     mapDispatchToProps,
 );
 
-export default compose(withConnect)(AddPage)
+export default compose(withConnect)(AddPage);

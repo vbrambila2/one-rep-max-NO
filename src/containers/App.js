@@ -5,18 +5,20 @@ import AddPage from './AddPage';
 import HomePage from './HomePage';
 import MovementPage from './MovementPage';
 
-const App = () => {
-    return (
-        <div>
-            <Router history={history}>
-                <Switch>
-                    <Route exact path="/" component={HomePage} ></Route>
-                    <Route exact path="/movement/:id"component={MovementPage} ></Route>
-                    <Route exact path="/add" component={AddPage} ></Route>
-                </Switch>
-            </Router>
-        </div>
-    )
+class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Router history={history}>
+                    <Switch>
+                        <Route exact path="/" render={ (props) => <HomePage title="One Rep - Home" /> } ></Route>
+                        <Route exact path="/movement/:id" render={ (props) => <MovementPage title="One Rep - Movement" /> } ></Route>
+                        <Route exact path="/add" render={ (props) => <AddPage title="One Rep - Add" /> } ></Route>
+                    </Switch>
+                </Router>
+            </div>
+        )
+    }
 };
 
 export default App;
