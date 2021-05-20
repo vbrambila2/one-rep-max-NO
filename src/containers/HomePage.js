@@ -48,24 +48,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const HomePage = () => {
+const HomePage = (props) => {
     const classes = useStyles();
-    const name  = useSelector(state => state.name);
+    const name  = props.name.newMovement.movementName;
     const displayMovementButtons = () => {
-        console.log(name, "name");
-        if (name !== undefined) {
-            
+        if (!name) {    
             return (
-                <Button 
-                    className={classes.movementButtons}
-                    onClick={() => history.push('/movement/:id')}
-                >   
-                    <div className={classes.movementName} >{name}</div>
-                </Button>
+                <div className={classes.noMovementsMessage} >Click add button to begin</div> 
             )
-        }; 
+        }
 
-        return <div className={classes.noMovementsMessage} >Click add button to begin</div>
+        return (
+            <Button 
+                className={classes.movementButtons}
+                onClick={() => history.push('/movement/:id')}
+            >   
+                <div className={classes.movementName} >{name}</div>
+            </Button>
+        )
     };
 
     return (
@@ -85,7 +85,7 @@ const HomePage = () => {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.move.name,  
+        name: state.move
     }   
 };
 

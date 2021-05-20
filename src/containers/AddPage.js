@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -9,6 +10,10 @@ import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { addMovement } from '../actions/index';
 import { useDispatch }  from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import { ErrorSharp } from '@material-ui/icons';
+import history from '../history';
+import HomePage from './HomePage';
 
 const useStyles = makeStyles((theme) => ({
     addPage: {
@@ -46,54 +51,87 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-const AddPage = () => {
-    const [name, setName] = useState('');
-    const [weight, setWeight] = useState(0);
+const AddPage = (props) => {
+    //const [name, setName] = useState('');
+    //const [weight, setWeight] = useState(0);
     // const name = useSelector(state => state.move.name);
     // const weight = useSelector(state => state.move.weight);
     const classes = useStyles();
     const dispatch = useDispatch();
-
-    console.log(name, weight);
+    const updateText = (event) => {
+        dispatch(addMovement(event.target.value))
+    };
+    const renderError = ({ error, touched }) => {
+        if (touched && error ) {
+            return (
+                <div>
+                    {error}
+                </div>
+            )
+        }
+    }
+    const renderInput = ({ input, label, meta }) => {
+        return (
+            <div>
+                <label>{label}:   </label>
+                <input {...input} /> 
+                {renderError(meta)}
+            </div>
+            
+        )  
+    };
+    const onSubmit = (formValues) => {
+        props.addMovement(formValues);
+    }
+    
 
     return (
         <div>
             <Header title="Add Page" />
             <div className={classes.addPage}>
                 <div className={classes.addMovementDiv}>
-                    <TextField 
+                    <form onSubmit={props.handleSubmit(onSubmit)} >
+                        <Field 
+                            name="movementName" 
+                            component={renderInput} 
+                            label="Movement Name" 
+                        />
+                        <Field
+                            name="movementWeight" 
+                            component={renderInput} 
+                            label="One Rep Max" 
+                         />
+                         <button >Submit</button>
+                    </form>
+                    {/* <TextField 
                         className={classes.movementName} 
-                        key="name" 
+                        value={props.name} 
                         label="Enter Movement Name" 
                         InputProps= {{className: "textBoxColor"}}
                         variant="outlined"
-                        onChange={event => {
-                            const { value } = event.target;
-                            setName(value);
-                        }}
+                        onChange={updateText()}
+                        
                          
                         
                          />    
                     <TextField 
                         className={classes.movementWeight} 
-                        key="weight" 
+                        value={props.weight} 
                         label="Enter Movement Weight" 
                         type="number" 
                         variant="outlined"
-                        onChange={event => {
-                            const { value } = event.target;
-                            setWeight(value);
-                        }}
+                        onChange={updateText()}
                         
-                        InputProps= {{endAdornment: <InputAdornment position="end">lb</InputAdornment>, className: "textBoxColor"}} />
-                    <Link 
+                        InputProps= {{endAdornment: <InputAdornment position="end">lb</InputAdornment>, className: "textBoxColor"}}
+                    /> */}
+                    {/* <Link 
                         to={`/`}
                         className={classes.addButton}
                         variant="outlined"
-                        onClick={() => dispatch(addMovement(name, weight))}
+                        onClick={() => dispatch(addMovement(props.name, props.weight))}
                         >
-                        <AddCircleIcon />
-                    </Link>
+                        Submit
+                    </Link> */}
                 </div>
             </div>
         </div>
@@ -111,6 +149,12 @@ const mapDispatchToProps = (dispatch) => {
     return({
         addMovement: (name, weight) => dispatch(addMovement(name, weight)),
     })
+    // return {
+    //     moveChanged: (e) => {
+    //         const action = { type: ADD_MOVEMENT, name: e.target.value, weight: e.target.value };
+    //         dispatch(action);
+    //     }
+    // }
 };
 
 const withConnect = connect(
@@ -118,4 +162,24 @@ const withConnect = connect(
     mapDispatchToProps,
 );
 
-export default compose(withConnect)(AddPage);
+const validate = (formValues) => {
+    const errors = {};
+
+    if (!formValues.movementName) {
+        errors.movementName = "Please enter a Name";
+    }
+
+    if (!formValues.movementWeight) {
+        errors.movementWeight = "Please enter a Weight";
+    }
+
+    return errors;
+};
+
+// export default compose(withConnect)(AddPage);
+const formWrap = reduxForm({
+    form: 'addMovementForm',
+    validate: validate,
+})(AddPage);
+
+export default connect(null, { addMovement })(formWrap);
