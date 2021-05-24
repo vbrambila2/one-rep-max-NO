@@ -1,21 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core'
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { compose } from 'redux';
 import { addMovement } from '../actions/index';
-import { useDispatch }  from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { ErrorSharp } from '@material-ui/icons';
-import history from '../history';
-import HomePage from './HomePage';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     addPage: {
         display: 'flex',
         justifyContent: 'center',
@@ -51,40 +41,32 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-const AddPage = (props) => {
-    //const [name, setName] = useState('');
-    //const [weight, setWeight] = useState(0);
-    // const name = useSelector(state => state.move.name);
-    // const weight = useSelector(state => state.move.weight);
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const updateText = (event) => {
-        dispatch(addMovement(event.target.value))
-    };
-    const renderError = ({ error, touched }) => {
-        if (touched && error ) {
-            return (
-                <div>
-                    {error}
-                </div>
-            )
-        }
-    }
-    const renderInput = ({ input, label, meta }) => {
+const renderInput = ({ input, label, meta }) => {
+    return (
+        <div>
+            <label>{label}:   </label>
+            <input {...input} /> 
+            {renderError(meta)}
+        </div>    
+    )  
+};
+const renderError = ({ error, touched }) => {
+    if (touched && error ) {
         return (
             <div>
-                <label>{label}:   </label>
-                <input {...input} /> 
-                {renderError(meta)}
+                {error}
             </div>
-            
-        )  
+        )
     };
+};
+
+
+const AddPage = (props) => {
+    const classes = useStyles();
     const onSubmit = (formValues) => {
         props.addMovement(formValues);
-    }
+    };
     
-
     return (
         <div>
             <Header title="Add Page" />
@@ -103,35 +85,6 @@ const AddPage = (props) => {
                          />
                          <button >Submit</button>
                     </form>
-                    {/* <TextField 
-                        className={classes.movementName} 
-                        value={props.name} 
-                        label="Enter Movement Name" 
-                        InputProps= {{className: "textBoxColor"}}
-                        variant="outlined"
-                        onChange={updateText()}
-                        
-                         
-                        
-                         />    
-                    <TextField 
-                        className={classes.movementWeight} 
-                        value={props.weight} 
-                        label="Enter Movement Weight" 
-                        type="number" 
-                        variant="outlined"
-                        onChange={updateText()}
-                        
-                        InputProps= {{endAdornment: <InputAdornment position="end">lb</InputAdornment>, className: "textBoxColor"}}
-                    /> */}
-                    {/* <Link 
-                        to={`/`}
-                        className={classes.addButton}
-                        variant="outlined"
-                        onClick={() => dispatch(addMovement(props.name, props.weight))}
-                        >
-                        Submit
-                    </Link> */}
                 </div>
             </div>
         </div>
@@ -149,18 +102,8 @@ const mapDispatchToProps = (dispatch) => {
     return({
         addMovement: (name, weight) => dispatch(addMovement(name, weight)),
     })
-    // return {
-    //     moveChanged: (e) => {
-    //         const action = { type: ADD_MOVEMENT, name: e.target.value, weight: e.target.value };
-    //         dispatch(action);
-    //     }
-    // }
-};
 
-const withConnect = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-);
+};
 
 const validate = (formValues) => {
     const errors = {};
@@ -176,10 +119,9 @@ const validate = (formValues) => {
     return errors;
 };
 
-// export default compose(withConnect)(AddPage);
 const formWrap = reduxForm({
     form: 'addMovementForm',
     validate: validate,
 })(AddPage);
 
-export default connect(null, { addMovement })(formWrap);
+export default connect(mapStateToProps, mapDispatchToProps)(formWrap);

@@ -1,17 +1,6 @@
 import { ADD_MOVEMENT } from '../actions/constants.js';
 
-const initialState = {
-
-}
-
-// const addMovementReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         case ADD_MOVEMENT: 
-//             return Object.assign({}, state, {name: action.name, weight: action.weight})
-//         default:
-//             return state;
-//     }
-// };
+const initialState = {}
 
 const addMovementReducer = (state = initialState, action) => {
     const newMovement = "newMovement";

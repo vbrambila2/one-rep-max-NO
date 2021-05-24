@@ -5,10 +5,7 @@ import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import history from '../history';
-//import { getMovements } from '../actions/index';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { useSelector }  from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     homePageContent: {
@@ -50,13 +47,13 @@ const useStyles = makeStyles((theme) => ({
 
 const HomePage = (props) => {
     const classes = useStyles();
-    const name  = props.name.newMovement.movementName;
+    const name  = props.name?.newMovement?.movementName;
     const displayMovementButtons = () => {
         if (!name) {    
             return (
                 <div className={classes.noMovementsMessage} >Click add button to begin</div> 
             )
-        }
+        };
 
         return (
             <Button 
@@ -89,8 +86,4 @@ const mapStateToProps = (state) => {
     }   
 };
 
-const withConnect = connect(
-    mapStateToProps,
-);
-
-export default compose(withConnect)(HomePage);
+export default connect(mapStateToProps)(HomePage);
