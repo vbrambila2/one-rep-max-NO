@@ -21,17 +21,20 @@ const useStyles = makeStyles((theme) => ({
     },
     movementButtons: {
         fontFamily: 'PT Sans Caption',
-        marginTop: '100px',
+        marginTop: '30px',
         borderRadius: '10px',
         background: '#C4C4C4',
         boxShadow: '0px 2px 2px #A9A9A9',
+        paddingLeft: '200px',
+        paddingRight: '200px',
+        
     },
     movementName: {
         fontFamily: 'PT Sans Caption',
         fontSize: '20px', 
-        padding: '10px',
-        paddingLeft: '200px',
-        paddingRight: '200px',
+        padding: '100px',
+        display: 'flex',
+        flexDirection: 'column',
     },
     fabDiv: {
         display: 'flex',
@@ -47,21 +50,27 @@ const useStyles = makeStyles((theme) => ({
 
 const HomePage = (props) => {
     const classes = useStyles();
-    const name  = props.name?.newMovement?.movementName;
+    const names  = props.name
+    const mapNames = names.map((lift) => {
+        return (
+            <Button 
+                key={lift.newMovement.movementName}
+                className={classes.movementButtons} 
+                onClick={() => history.push('/movement/:name')}
+            >
+                {lift.newMovement.movementName}
+            </Button>
+        )
+    });
     const displayMovementButtons = () => {
-        if (!name) {    
+        if (mapNames.length === 0) {    
             return (
                 <div className={classes.noMovementsMessage} >Click add button to begin</div> 
             )
         };
 
-        return (
-            <Button 
-                className={classes.movementButtons}
-                onClick={() => history.push('/movement/:id')}
-            >   
-                <div className={classes.movementName} >{name}</div>
-            </Button>
+        return (  
+                <div className={classes.movementName} >{mapNames}</div>
         )
     };
 
@@ -83,7 +92,7 @@ const HomePage = (props) => {
 const mapStateToProps = (state) => {
     return {
         name: state.move
-    }   
+    }
 };
 
 export default connect(mapStateToProps)(HomePage);

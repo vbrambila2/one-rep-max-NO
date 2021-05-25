@@ -11,9 +11,9 @@ class App extends React.Component {
             <div>
                 <Router history={history}>
                     <Switch>
-                        <Route exact path="/" render={ (props) => <HomePage title="One Rep - Home" /> } ></Route>
-                        <Route exact path="/movement/:id" render={ (props) => <MovementPage title="One Rep - Movement" /> } ></Route>
-                        <Route exact path="/add" render={ (props) => <AddPage title="One Rep - Add" /> } ></Route>
+                        <Route exact path="/" render={ () => <HomePage title="One Rep - Home" /> } ></Route>
+                        <Route exact path="/movement/:name" render={ () => <MovementPage title="One Rep - Movement" /> } ></Route>
+                        <Route exact path="/add" render={ () => <AddPage title="One Rep - Add" /> } ></Route>
                     </Switch>
                 </Router>
             </div>

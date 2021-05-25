@@ -60,13 +60,12 @@ const renderError = ({ error, touched }) => {
     };
 };
 
-
 const AddPage = (props) => {
     const classes = useStyles();
     const onSubmit = (formValues) => {
         props.addMovement(formValues);
     };
-    
+
     return (
         <div>
             <Header title="Add Page" />
@@ -93,14 +92,13 @@ const AddPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.move.name,
-        weight: state.move.weight,   
+        formValues: state.move   
     }   
 };
 
 const mapDispatchToProps = (dispatch) => {
     return({
-        addMovement: (name, weight) => dispatch(addMovement(name, weight)),
+        addMovement: (formValues) => dispatch(addMovement(formValues)),
     })
 
 };
