@@ -52,11 +52,7 @@ const renderInput = ({ input, label, meta }) => {
 };
 const renderError = ({ error, touched }) => {
     if (touched && error ) {
-        return (
-            <div>
-                {error}
-            </div>
-        )
+        return <div>{error}</div>
     };
 };
 

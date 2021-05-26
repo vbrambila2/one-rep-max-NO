@@ -12,7 +12,7 @@ class App extends React.Component {
                 <Router history={history}>
                     <Switch>
                         <Route exact path="/" render={ () => <HomePage title="One Rep - Home" /> } ></Route>
-                        <Route exact path="/movement/:name" render={ () => <MovementPage title="One Rep - Movement" /> } ></Route>
+                        <Route exact path="/movement/:name/:weight" render={ () => <MovementPage title="One Rep - Movement" /> } ></Route>
                         <Route exact path="/add" render={ () => <AddPage title="One Rep - Add" /> } ></Route>
                     </Switch>
                 </Router>
