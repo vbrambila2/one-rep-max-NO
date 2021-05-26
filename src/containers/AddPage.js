@@ -64,7 +64,7 @@ const AddPage = (props) => {
 
     return (
         <div>
-            <Header title="Add Page" />
+            <Header title="Add Movement" />
             <div className={classes.addPage}>
                 <div className={classes.addMovementDiv}>
                     <form onSubmit={props.handleSubmit(onSubmit)} >

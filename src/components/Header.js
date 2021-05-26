@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import history from '../history';
 import Button from '@material-ui/core/Button';
+import history from '../history';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -44,7 +44,7 @@ const Header = (props) => {
                 variant="contained"
                 className={classes.homeButton}
                 onClick={() => history.push("/")}>   
-                Home 
+                Home
             </Button>
             {title}
             <div className={classes.fakeText}>-------</div>

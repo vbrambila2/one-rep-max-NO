@@ -4,9 +4,6 @@ import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    fab: {
-        background: '#C4C4C4',
-    },
     fabDiv: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -14,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
         bottom: theme.spacing(2),
         right: theme.spacing(2),
       },
+    fab: {
+        background: '#C4C4C4',
+    },
 }));
 
 const FabButton = () => {
@@ -25,8 +25,7 @@ const FabButton = () => {
                 onClick={() => history.push(`/add`)}>  
                 <AddIcon />      
             </Fab>
-        </div>
-       
+        </div>   
     )
 };
 

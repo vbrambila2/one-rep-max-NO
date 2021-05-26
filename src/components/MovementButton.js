@@ -14,20 +14,20 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    movementButtonsDiv: {
-        marginTop: '100px'
-    },
     noMovementsMessage: {
         marginTop: '30px',
         fontFamily: 'PT Sans Caption',
         fontSize: '20px',
         textTransform: 'uppercase',
     },
+    movementButtonsDiv: {
+        marginTop: '100px'
+    },
 }));
 
 const MovementButton = (props) => {
     const classes = useStyles();
-    const names  = props.name
+    const names = props.name
     const mapNames = names.map((lift) => {
         return (
             <Button 
@@ -35,7 +35,7 @@ const MovementButton = (props) => {
                 className={classes.movementButtons} 
                 onClick={() => history.push(`/movement/${lift.newMovement.movementName}/${lift.newMovement.movementWeight}`)}
             >
-                {lift.newMovement.movementName}
+                {lift.newMovement.movementName} - {lift.newMovement.movementWeight}lbs
             </Button>
         )
     });
@@ -44,8 +44,9 @@ const MovementButton = (props) => {
             return <div className={classes.noMovementsMessage} >Click add button to begin</div> 
         };
 
-        return <div className={classes.movementName} >{mapNames}</div>
+        return <div>{mapNames}</div>
     };
+
     return <div className={classes.movementButtonsDiv}>{displayMovementButtons()}</div>
 };
 

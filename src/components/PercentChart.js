@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router';
 
 const useStyles = makeStyles(() => ({
-    PREntry: {
+    oneRepMaxWeight: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
         fontSize: '18px',
         marginTop: '100px'
     },
-    PRChart: {
+    oneRepMaxChart: {
         background: '#C4C4C4',
         borderRadius: '10px',
         borderCollapse: 'separate',
@@ -20,20 +20,21 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    percentHeader: {
+    chartHeader: {
         borderRadius: '10px',
         padding: '5px',
         fontSize: '24px', 
         display: 'flex',
         justifyContent: 'space-around'
     },
-    percentBox: {
+    chartBox: {
         background: '#E7E7E7',
         border: '1px solid #C4C4C4',
         padding: '5px',
         fontSize: '24px',
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        fontFamily: 'PT Sans Caption',
     },
 }));
 
@@ -57,15 +58,13 @@ const PercentChart = () => {
 
     return (
         <div>
-            <div>
-                <div className={classes.PREntry}>One Rep Max: {movementWeightURL}</div>   
-                <div className={classes.PRChart}>
-                    <h1 className={classes.percentHeader} >Percent<div>Weight</div></h1>
-                    <div>
-                        {results.map((result) => (
-                        <div key={result[0]} className={classes.percentBox} >{result[0]}% <div>{result[1]}</div></div>
-                        ))}
-                    </div>
+            <div className={classes.oneRepMaxWeight}>One Rep Max: {movementWeightURL}</div>   
+            <div className={classes.oneRepMaxChart}>
+                <h1 className={classes.chartHeader} >Percent<div>Weight</div></h1>
+                <div>
+                    {results.map((result) => (
+                    <div key={result[0]} className={classes.chartBox} >{result[0]}% <div>{result[1]}</div></div>
+                    ))}
                 </div>
             </div>
         </div>
