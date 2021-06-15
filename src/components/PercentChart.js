@@ -45,7 +45,7 @@ const PercentChart = () => {
     const pathArray = location.pathname.split('/');
     const movementWeightURL = (pathArray[3]);
     const [results, setResults] = useState([]);
- 
+
     useEffect(() => {
         const arr = [];
         let percentage = 100;
@@ -71,4 +71,4 @@ const PercentChart = () => {
     );
 };
 
-export default PercentChart;
+export default (PercentChart);
