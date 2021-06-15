@@ -50,6 +50,7 @@ const renderInput = ({ input, label, meta }) => {
         </div>    
     )  
 };
+
 const renderError = ({ error, touched }) => {
     if (touched && error ) {
         return <div>{error}</div>
@@ -96,7 +97,6 @@ const mapDispatchToProps = (dispatch) => {
     return({
         addMovement: (formValues) => dispatch(addMovement(formValues)),
     })
-
 };
 
 const validate = (formValues) => {

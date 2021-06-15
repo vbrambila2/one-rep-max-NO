@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => ({
 const HomePage = (props) => {
     const classes = useStyles();
     
-
     return (
         <div className={classes.homePageContent} >
-            <Header title={"One Rep Max" }/>
+            <Header title={"One Rep Max"}/>
             <MovementButton />
             <FabButton />
         </div>

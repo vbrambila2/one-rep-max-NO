@@ -32,7 +32,6 @@ const MovementPage = () => {
         return <PercentChart />
     };
 
-
     return (
         <div>
             <Header title={movementNameURL} />
