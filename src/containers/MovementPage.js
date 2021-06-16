@@ -14,7 +14,6 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-
 const MovementPage = () => {
     const classes = useStyles();
     const location = useLocation();

@@ -38,7 +38,6 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-
 const PercentChart = () => {
     const classes = useStyles();
     const location = useLocation();
