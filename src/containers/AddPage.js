@@ -46,7 +46,7 @@ const renderInput = ({ input, label, meta }) => {
         <div>
             <label>{label}:   </label>
             <input {...input} /> 
-            {renderError(meta)}
+            <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
         </div>    
     )  
 };

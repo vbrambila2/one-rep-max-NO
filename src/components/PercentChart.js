@@ -42,7 +42,7 @@ const PercentChart = () => {
     const classes = useStyles();
     const location = useLocation();
     const pathArray = location.pathname.split('/');
-    const movementWeightURL = (pathArray[3]);
+    const movementWeightURL = Number(pathArray[3]);
     const [results, setResults] = useState([]);
 
     useEffect(() => {
