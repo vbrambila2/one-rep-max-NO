@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useLocation } from 'react-router';
+//import { useLocation } from 'react-router';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
     oneRepMaxWeight: {
@@ -38,26 +39,39 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const PercentChart = () => {
+const PercentChart = (props) => {
     const classes = useStyles();
-    const location = useLocation();
-    const pathArray = location.pathname.split('/');
-    const movementWeightURL = Number(pathArray[3]);
+    //const location = useLocation();
+    //const pathArray = location.pathname.split('/');
+    //const movementWeightURL = (pathArray[3]);
     const [results, setResults] = useState([]);
+    console.log(props.weight, "weight");
+    const mapWeights = props.weight.map((movement) => {
+        return (
+            <div 
+                key={movement.movementName}
+            >
+                {movement.movementWeight}
+            </div>
+        )
+    });
+    console.log(mapWeights, "Map");
+    console.log(props.name, "name");
+   
 
     useEffect(() => {
         const arr = [];
         let percentage = 100;
         while (percentage > 50 ) {
-            arr.push([percentage, (movementWeightURL * percentage) / 100]);
+            arr.push([percentage, (mapWeights * percentage) / 100]);
             percentage -= 5;
         }
         setResults(arr);
-    }, [movementWeightURL]);
+    }, [mapWeights]);
 
     return (
         <div>
-            <div className={classes.oneRepMaxWeight}>One Rep Max: {movementWeightURL}</div>   
+            <div className={classes.oneRepMaxWeight}>One Rep Max: {mapWeights}</div>   
             <div className={classes.oneRepMaxChart}>
                 <h1 className={classes.chartHeader} >Percent<div>Weight</div></h1>
                 <div>
@@ -70,4 +84,12 @@ const PercentChart = () => {
     );
 };
 
-export default (PercentChart);
+const mapStateToProps = (state) => {
+    return {
+        weight: state.move,
+        name: state.move
+    }
+};
+
+
+export default connect(mapStateToProps, null)(PercentChart);
