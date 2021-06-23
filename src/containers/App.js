@@ -9,7 +9,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Router history={history} basename="/one-rep-max">
+                <Router history={history} basename={window.location.pathname || ''}>
                     <Switch>
                         <Route exact path="/" render={ () => <HomePage title="One Rep - Home" /> } ></Route>
                         <Route exact path="/movement/:name/:weight" render={ () => <MovementPage title="One Rep - Movement" /> } ></Route>
