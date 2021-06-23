@@ -2,7 +2,7 @@
   "name": "one-rep-max",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vbrambila2.github.io/one-rep-max",
+  "homepage": "https://vbrambila2.github.io/one-rep-max/",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
