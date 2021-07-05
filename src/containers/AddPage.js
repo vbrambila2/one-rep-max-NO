@@ -41,11 +41,21 @@ const useStyles = makeStyles(() => ({
       },
 }));
 
-const renderInput = ({ input, label, meta }) => {
+const renderInputName = ({ input, label, meta }) => {
     return (
         <div>
             <label>{label}:   </label>
-            <input {...input} /> 
+            <input {...input} type="text" /> 
+            <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
+        </div>    
+    )  
+};
+
+const renderInputWeight = ({ input, label, meta }) => {
+    return (
+        <div>
+            <label>{label}:   </label>
+            <input {...input} type="number" /> 
             <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
         </div>    
     )  
@@ -70,13 +80,13 @@ const AddPage = (props) => {
                 <div className={classes.addMovementDiv}>
                     <form onSubmit={props.handleSubmit(onSubmit)} >
                         <Field 
-                            name="movementName" 
-                            component={renderInput} 
+                            name="movementName"
+                            component={renderInputName} 
                             label="Movement Name" 
                         />
                         <Field
                             name="movementWeight" 
-                            component={renderInput} 
+                            component={renderInputWeight} 
                             label="One Rep Max" 
                          />
                          <button >Submit</button>

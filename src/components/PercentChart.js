@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-//import { useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
@@ -12,6 +12,9 @@ const useStyles = makeStyles(() => ({
         fontFamily: 'PT Sans Caption',
         fontSize: '18px',
         marginTop: '100px'
+    },
+    oneRepMaxWeightNumber: {
+        padding: '5px',
     },
     oneRepMaxChart: {
         background: '#C4C4C4',
@@ -41,37 +44,34 @@ const useStyles = makeStyles(() => ({
 
 const PercentChart = (props) => {
     const classes = useStyles();
-    //const location = useLocation();
-    //const pathArray = location.pathname.split('/');
-    //const movementWeightURL = (pathArray[3]);
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const movementNameURL = (pathArray[2]);
     const [results, setResults] = useState([]);
-    console.log(props.weight, "weight");
-    const mapWeights = props.weight.map((movement) => {
-        return (
-            <div 
-                key={movement.movementName}
-            >
-                {movement.movementWeight}
-            </div>
-        )
-    });
-    console.log(mapWeights, "Map");
-    console.log(props.name, "name");
-   
+    const selected = props.weight.find((e) => e.movementName === movementNameURL);
 
     useEffect(() => {
         const arr = [];
         let percentage = 100;
         while (percentage > 50 ) {
-            arr.push([percentage, (mapWeights * percentage) / 100]);
+            arr.push([percentage, (selected.movementWeight * percentage) / 100]);
             percentage -= 5;
         }
         setResults(arr);
-    }, [mapWeights]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const displayWeight = () => {
+        if (selected.movementWeight.length === 0) {    
+            return <div>No 1RM recorded</div> 
+        };
+
+        return <div>{selected.movementWeight}</div>
+    };
 
     return (
         <div>
-            <div className={classes.oneRepMaxWeight}>One Rep Max: {mapWeights}</div>   
+            <div className={classes.oneRepMaxWeight}>One Rep Max:<div className={classes.oneRepMaxWeightNumber}>{displayWeight()}</div></div>   
             <div className={classes.oneRepMaxChart}>
                 <h1 className={classes.chartHeader} >Percent<div>Weight</div></h1>
                 <div>
@@ -87,9 +87,7 @@ const PercentChart = (props) => {
 const mapStateToProps = (state) => {
     return {
         weight: state.move,
-        name: state.move
     }
 };
 
-
-export default connect(mapStateToProps, null)(PercentChart);
+export default connect(mapStateToProps)(PercentChart);
