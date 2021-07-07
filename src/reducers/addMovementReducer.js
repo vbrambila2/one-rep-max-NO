@@ -1,11 +1,11 @@
 import { ADD_MOVEMENT } from '../actions/constants.js';
 
-const initialState = []
+const initialState = [];
 
 const addMovementReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MOVEMENT: 
-            return [ ...state, {name: action.name, weight: action.weight} ]
+            return [ ...state, action.payload ];
         default:
             return state;
     }
