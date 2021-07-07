@@ -8,3 +8,11 @@ export const addMovement = (formValues) => {
         payload: formValues,
     }
 };
+
+export const updateMovement = (formValues) => {
+    history.push('/')
+    return {
+        type: constants.UPDATE_MOVEMENT,
+        payload: formValues,
+    }
+};
