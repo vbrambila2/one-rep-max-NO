@@ -26,7 +26,6 @@ const renderInputWeight = ({ input, label, meta }) => {
 
 const UpdatePage = (props) => {
     const classes = useStyles();
-    console.log(props.weight, "up");
     const onSubmit = (formValues) => {
         props.updateMovement(formValues);
     };
