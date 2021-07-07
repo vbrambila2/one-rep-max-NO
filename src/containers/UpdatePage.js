@@ -36,7 +36,7 @@ const UpdatePage = (props) => {
             <div className={classes.updatePage}>
                 <form onSubmit={props.handleSubmit(onSubmit)}>
                     <Field
-                        name="movementWeight"  
+                        name="newMovementWeight"  
                         label="New One Rep Max: " 
                         component={renderInputWeight}
                     />
