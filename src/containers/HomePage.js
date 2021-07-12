@@ -17,7 +17,7 @@ const HomePage = (props) => {
     
     return (
         <div className={classes.homePageContent} >
-            <Header title={"One Rep Max"}/>
+            <Header title={"One Rp Max"}/>
             <MovementButton />
             <FabButton />
         </div>
