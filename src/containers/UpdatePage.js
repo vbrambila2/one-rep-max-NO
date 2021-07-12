@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { updateMovement } from '../actions/index';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { useLocation } from 'react-router';
 
 const useStyles = makeStyles(() => ({
     updatePage: {
@@ -11,15 +12,31 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         justifyContent: 'center',
         fontFamily: 'PT Sans Caption',
-    }
+    },
 }));
+
+const LocationFunction = () => {
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const movementNameURL = (pathArray[2]);
+    return movementNameURL
+};
+    
+
+const renderInputName = ({ input, label, meta }) => {
+    return (
+        <div>
+            <label>{label}:   </label>
+            <input {...input} readOnly autoFocus={true} type="text" value={LocationFunction()} /> 
+        </div>    
+    )  
+};
 
 const renderInputWeight = ({ input, label, meta }) => {
     return (
         <div>
             <label>{label}:   </label>
             <input {...input} type="number" /> 
-            <div style={{fontSize: "15px", color:"red"}}></div>
         </div>    
     )  
 };
@@ -27,7 +44,7 @@ const renderInputWeight = ({ input, label, meta }) => {
 const UpdatePage = (props) => {
     const classes = useStyles();
     const onSubmit = (formValues) => {
-        props.updateMovement(formValues);
+        props.updateMovement(formValues)
     };
 
     return (
@@ -35,8 +52,13 @@ const UpdatePage = (props) => {
             <Header title="Update Movement" />
             <div className={classes.updatePage}>
                 <form onSubmit={props.handleSubmit(onSubmit)}>
+                    <Field 
+                        name="movementName"
+                        component={renderInputName} 
+                        label="Movement Selected"
+                    />
                     <Field
-                        name="newMovementWeight"  
+                        name="movementWeight"  
                         label="New One Rep Max: " 
                         component={renderInputWeight}
                     />
@@ -49,7 +71,7 @@ const UpdatePage = (props) => {
 
 const mapStateToProps = state => {
     return {
-      weight: state.move
+      formValues: state.move,
     };
   };
 
