@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router';
 import { connect } from 'react-redux';
 import UpdateButton from './UpdateButton';
+import DeleteButton from './DeleteButton';
 
 const useStyles = makeStyles(() => ({
     oneRepMaxWeight: {
@@ -74,7 +75,8 @@ const PercentChart = (props) => {
         <div>
             <div className={classes.oneRepMaxWeight}>One Rep Max:
                 <div className={classes.oneRepMaxWeightNumber}>{displayWeight()}</div>
-                <UpdateButton/>
+                <UpdateButton />
+                <DeleteButton />
             </div> 
             <div className={classes.oneRepMaxChart}>
                 <h1 className={classes.chartHeader} >Percent<div>Weight</div></h1>

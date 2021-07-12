@@ -16,3 +16,11 @@ export const updateMovement = (formValues) => {
         payload: formValues,
     }
 };
+
+export const deleteMovement = (formValues) => {
+    history.push('/')
+    return {
+        type: constants.DELETE_MOVEMENT,
+        payload: formValues,
+    }
+};

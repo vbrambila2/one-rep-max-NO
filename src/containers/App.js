@@ -5,6 +5,7 @@ import AddPage from './AddPage';
 import HomePage from './HomePage';
 import MovementPage from './MovementPage';
 import UpdatePage from './UpdatePage';
+import DeletePage from './DeletePage';
 
 class App extends React.Component {
     render() {
@@ -16,6 +17,7 @@ class App extends React.Component {
                         <Route exact path="/movement/:name/:weight" render={ () => <MovementPage title="One Rep - Movement" /> } ></Route>
                         <Route exact path="/add" render={ () => <AddPage title="One Rep - Add" /> } ></Route>
                         <Route exact path="/update/:name" render={ () => <UpdatePage title="One Rep - Update" /> } ></Route>
+                        <Route exact path="/delete/:name" render={ () => <DeletePage title="One Rep - Delete" /> } ></Route>
                     </Switch>
                 </Router>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
-import { updateMovement } from '../actions/index';
+import { deleteMovement } from '../actions/index';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { useLocation } from 'react-router';
@@ -15,10 +15,17 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const LocationFunction = () => {
+const NameLocationFunction = () => {
     const location = useLocation();
     const pathArray = location.pathname.split('/');
     const movementNameURL = (pathArray[2]);
+    return movementNameURL
+};
+
+const WeightLocationFunction = () => {
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const movementNameURL = (pathArray[3]);
     return movementNameURL
 };
     
@@ -26,8 +33,8 @@ const LocationFunction = () => {
 const renderInputName = ({ input, label }) => {
     return (
         <div>
-            <label>{label}: </label>
-            <input {...input} readOnly autoFocus={true} type="text" value={LocationFunction()} /> 
+            <label>{label}:   </label>
+            <input {...input} readOnly autoFocus={true} type="text" value={NameLocationFunction()} /> 
         </div>    
     )  
 };
@@ -35,34 +42,34 @@ const renderInputName = ({ input, label }) => {
 const renderInputWeight = ({ input, label }) => {
     return (
         <div>
-            <label>{label}: </label>
-            <input {...input} type="number" /> 
+            <label>{label}   </label>
+            <input {...input} type="hidden" value={WeightLocationFunction()} /> 
         </div>    
     )  
 };
 
-const UpdatePage = (props) => {
+const DeletePage = (props) => {
     const classes = useStyles();
     const onSubmit = (formValues) => {
-        props.updateMovement(formValues)
+        props.deleteMovement(formValues)
     };
 
     return (
         <div>
-            <Header title="Update Movement" />
+            <Header title="Delete Movement" />
             <div className={classes.updatePage}>
                 <form onSubmit={props.handleSubmit(onSubmit)}>
                     <Field 
                         name="movementName"
                         component={renderInputName} 
-                        label="Movement Selected"
+                        label="Movement to be Deleted"
                     />
                     <Field
                         name="movementWeight"  
-                        label="New One Rep Max" 
+                        label="" 
                         component={renderInputWeight}
                     />
-                    <button>Update</button>
+                    <button>Delete</button>
                 </form>
             </div>
         </div>
@@ -77,12 +84,12 @@ const mapStateToProps = state => {
 
   const mapDispatchToProps = (dispatch) => {
     return({
-        updateMovement: (formValues) => dispatch(updateMovement(formValues)),
+        deleteMovement: (formValues) => dispatch(deleteMovement(formValues)),
     })
 };
 
   const formWrap = reduxForm({
     form: 'addMovementForm',
-})(UpdatePage);
+})(DeletePage);
 
 export default connect(mapStateToProps, mapDispatchToProps)(formWrap);

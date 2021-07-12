@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 const MovementButton = (props) => {
     const classes = useStyles();
     const mapNames = props.movements.map((movement) => {
+        if (props.movements === "") {
+            return <div className={classes.noMovementsMessage} >Click add button to begin</div> 
+        } else 
         return (
             <Button 
                 key={movement.movementName}
