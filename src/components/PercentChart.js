@@ -48,7 +48,7 @@ const PercentChart = (props) => {
     const classes = useStyles();
     const location = useLocation();
     const pathArray = location.pathname.split('/');
-    const movementNameURL = (pathArray[2]);
+    const movementNameURL = (pathArray[3]);
     const [results, setResults] = useState([]);
     const selected = props.weight.find((e) => e.movementName === movementNameURL);
 
@@ -92,7 +92,7 @@ const PercentChart = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        weight: state.move,
+        weight: Object.values(state.move),
     }
 };
 

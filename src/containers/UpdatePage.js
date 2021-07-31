@@ -13,57 +13,71 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         fontFamily: 'PT Sans Caption',
     },
+    updateMovementDiv: {
+        background: '#C4C4C4',
+        fontFamily: 'PT Sans Caption',
+        fontSize: '18px',
+        borderRadius: '10px',
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'right',
+      },
 }));
-
-const LocationFunction = () => {
-    const location = useLocation();
-    const pathArray = location.pathname.split('/');
-    const movementNameURL = (pathArray[2]);
-    return movementNameURL
-};
-    
-
-const renderInputName = ({ input, label }) => {
-    return (
-        <div>
-            <label>{label}: </label>
-            <input {...input} readOnly autoFocus={true} type="text" value={LocationFunction()} /> 
-        </div>    
-    )  
-};
-
-const renderInputWeight = ({ input, label }) => {
-    return (
-        <div>
-            <label>{label}: </label>
-            <input {...input} type="number" /> 
-        </div>    
-    )  
-};
 
 const UpdatePage = (props) => {
     const classes = useStyles();
-    const onSubmit = (formValues) => {
-        props.updateMovement(formValues)
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const movementIDURL = (pathArray[1]);
+    const selected = props.move.find((move) => move.id === Number(movementIDURL));
+    const selectedID = selected.id
+
+    const renderInputName = ({ input, label }) => {
+        return (
+            <div>
+                <label>{label}: </label>
+                <input {...input} autoFocus={true} type="text" value={selected.movementName} /> 
+            </div>    
+        )  
     };
+
+    const renderNewInputWeight = ({ input, label }) => {
+        return (
+            <div>
+                <label>{label}: </label>
+                <input {...input} type="number" /> 
+            </div>    
+        )  
+    };
+
+    const onSubmit = formValues => {
+        console.log(formValues, "update");
+        props.updateMovement(selectedID, formValues)
+    };
+
+    //console.log(selectedID, "selected");
+    console.log(props.move, "home");
 
     return (
         <div>
             <Header title="Update Movement" />
             <div className={classes.updatePage}>
+                <div className={classes.updateMovementDiv}>
                 <form onSubmit={props.handleSubmit(onSubmit)}>
                     <Field 
                         name="movementName"
-                        component={renderInputName} 
                         label="Movement Selected"
+                        component={renderInputName} 
                     />
                     <Field
                         name="movementWeight"  
                         label="New One Rep Max" 
-                        component={renderInputWeight}
+                        component={renderNewInputWeight}
                     />
-                    <button>Update</button>
+                    <button type="submit">Update</button>
                 </form>
+                </div>
             </div>
         </div>
     );
@@ -71,18 +85,18 @@ const UpdatePage = (props) => {
 
 const mapStateToProps = state => {
     return {
-      formValues: state.move,
+        move: state.move
     };
   };
 
-  const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return({
         updateMovement: (formValues) => dispatch(updateMovement(formValues)),
     })
 };
 
-  const formWrap = reduxForm({
-    form: 'addMovementForm',
+const formWrap = reduxForm({
+    form: 'updateMovementForm',
 })(UpdatePage);
 
 export default connect(mapStateToProps, mapDispatchToProps)(formWrap);

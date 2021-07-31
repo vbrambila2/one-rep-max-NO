@@ -20,12 +20,13 @@ const UpdateButton = (props) => {
     const classes = useStyles();
     const location = useLocation();
     const pathArray = location.pathname.split('/');
-    const movementNameURL = (pathArray[2]);
+    //const movementNameURL = (pathArray[3]);
+    const movementID = (pathArray[2]);
 
     return (
             <Button 
                 className={classes.updateButton}
-                onClick={() => history.push(`/update/${movementNameURL}`)}
+                onClick={() => history.push(`/${movementID}`)}
             >
                 Update
             </Button> 

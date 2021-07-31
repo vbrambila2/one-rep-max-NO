@@ -27,20 +27,18 @@ const useStyles = makeStyles((theme) => ({
 
 const MovementButton = (props) => {
     const classes = useStyles();
-    const mapNames = props.movements.map((movement) => {
-        if (props.movements === "") {
-            return <div className={classes.noMovementsMessage} >Click add button to begin</div> 
-        } else 
+    const mapNames = props.move.map((movement) => {
         return (
             <Button 
                 key={movement.movementName}
                 className={classes.movementButtons} 
-                onClick={() => history.push(`/movement/${movement.movementName}/${movement.movementWeight}`)}
+                onClick={() => history.push(`/movement/${movement.id}/${movement.movementName}/${movement.movementWeight}`)}
             >
-                {movement.movementName} - {movement.newMovementWeight || movement.movementWeight}lbs
+                {movement.movementName} - {movement.movementWeight}lbs
             </Button>
-        )
-    });
+        )}
+    );
+
     const displayMovementButtons = () => {
         if (mapNames.length === 0) {    
             return <div className={classes.noMovementsMessage} >Click add button to begin</div> 
@@ -54,7 +52,7 @@ const MovementButton = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        movements: state.move
+        move: Object.values(state.move),
     }
 };
 

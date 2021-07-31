@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { addMovement } from '../actions/index';
+import { createMovement } from '../actions/index';
 import { Field, reduxForm } from 'redux-form';
 
 const useStyles = makeStyles(() => ({
@@ -41,36 +41,35 @@ const useStyles = makeStyles(() => ({
       },
 }));
 
-const renderInputName = ({ input, label, meta }) => {
-    return (
-        <div>
-            <label>{label}:   </label>
-            <input {...input} type="text" /> 
-            <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
-        </div>    
-    )  
-};
-
-const renderInputWeight = ({ input, label, meta }) => {
-    return (
-        <div>
-            <label>{label}:   </label>
-            <input {...input} type="number" /> 
-            <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
-        </div>    
-    )  
-};
-
-const renderError = ({ error, touched }) => {
-    if (touched && error ) {
-        return <div>{error}</div>
-    };
-};
-
 const AddPage = (props) => {
     const classes = useStyles();
     const onSubmit = (formValues) => {
-        props.addMovement(formValues);
+        props.createMovement(formValues);
+    };
+    const renderInputName = ({ input, label, meta }) => {
+        return (
+            <div>
+                <label>{label}:   </label>
+                <input {...input} type="text" /> 
+                <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
+            </div>    
+        )  
+    };
+    
+    const renderInputWeight = ({ input, label, meta }) => {
+        return (
+            <div>
+                <label>{label}:   </label>
+                <input {...input} type="number" /> 
+                <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
+            </div>    
+        )  
+    };
+    
+    const renderError = ({ error, touched }) => {
+        if (touched && error ) {
+            return <div>{error}</div>
+        };
     };
 
     return (
@@ -97,15 +96,15 @@ const AddPage = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
-        formValues: state.move   
+        move: state.move   
     }   
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return({
-        addMovement: (formValues) => dispatch(addMovement(formValues)),
+        createMovement: (formValues) => dispatch(createMovement(formValues)),
     })
 };
 

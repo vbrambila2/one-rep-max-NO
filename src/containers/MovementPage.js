@@ -18,7 +18,7 @@ const MovementPage = () => {
     const classes = useStyles();
     const location = useLocation();
     const pathArray = location.pathname.split('/');
-    const movementNameURL = (pathArray[2]);
+    const movementNameURL = (pathArray[3]);
     const notFound = () => {
         if (movementNameURL === undefined) {
             return (
