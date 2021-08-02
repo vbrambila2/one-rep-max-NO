@@ -27,7 +27,7 @@ const MovementPage = () => {
                 </div>
             )
         }
-
+        
         return <PercentChart />
     };
 

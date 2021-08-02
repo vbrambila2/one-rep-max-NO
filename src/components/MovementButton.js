@@ -34,11 +34,10 @@ const MovementButton = (props) => {
                 className={classes.movementButtons} 
                 onClick={() => history.push(`/movement/${movement.id}/${movement.movementName}/${movement.movementWeight}`)}
             >
-                {movement.movementName} - {movement.movementWeight}lbs
+            {movement.movementName} - {movement.movementWeight}lbs
             </Button>
         )}
     );
-
     const displayMovementButtons = () => {
         if (mapNames.length === 0) {    
             return <div className={classes.noMovementsMessage} >Click add button to begin</div> 

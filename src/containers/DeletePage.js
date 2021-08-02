@@ -7,70 +7,65 @@ import { Field, reduxForm } from 'redux-form';
 import { useLocation } from 'react-router';
 
 const useStyles = makeStyles(() => ({
-    updatePage: {
+    deletePage: {
         marginTop: '150px',
         display: 'flex',
         justifyContent: 'center',
         fontFamily: 'PT Sans Caption',
     },
+    deleteMovementDiv: {
+        background: '#C4C4C4',
+        fontFamily: 'PT Sans Caption',
+        fontSize: '18px',
+        borderRadius: '10px',
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'right',
+    }
 }));
 
 const NameLocationFunction = () => {
     const location = useLocation();
     const pathArray = location.pathname.split('/');
-    const movementNameURL = (pathArray[2]);
-    return movementNameURL
-};
-
-const WeightLocationFunction = () => {
-    const location = useLocation();
-    const pathArray = location.pathname.split('/');
     const movementNameURL = (pathArray[3]);
     return movementNameURL
 };
-    
 
 const renderInputName = ({ input, label }) => {
     return (
         <div>
-            <label>{label}:   </label>
+            <label>{label}:   </label>  
             <input {...input} readOnly autoFocus={true} type="text" value={NameLocationFunction()} /> 
-        </div>    
-    )  
-};
-
-const renderInputWeight = ({ input, label }) => {
-    return (
-        <div>
-            <label>{label}   </label>
-            <input {...input} type="hidden" value={WeightLocationFunction()} /> 
         </div>    
     )  
 };
 
 const DeletePage = (props) => {
     const classes = useStyles();
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const movementIDURL = (pathArray[2]);
+    const selected = props.move.find(move => move.id === Number(movementIDURL));
+    const selectedID = selected.id
     const onSubmit = (formValues) => {
-        props.deleteMovement(formValues)
+        props.deleteMovement(selectedID, formValues)
     };
 
     return (
         <div>
             <Header title="Delete Movement" />
-            <div className={classes.updatePage}>
-                <form onSubmit={props.handleSubmit(onSubmit)}>
-                    <Field 
-                        name="movementName"
-                        component={renderInputName} 
-                        label="Movement to be Deleted"
-                    />
-                    <Field
-                        name="movementWeight"  
-                        label="" 
-                        component={renderInputWeight}
-                    />
-                    <button>Delete</button>
-                </form>
+            <div className={classes.deletePage}>
+                <div className={classes.deleteMovementDiv}>
+                    <form onSubmit={props.handleSubmit(onSubmit)}>
+                        <Field 
+                            name="movementName"
+                            component={renderInputName} 
+                            label="Movement to be Deleted"
+                        />
+                        <button>Delete</button>
+                    </form>
+                </div>
             </div>
         </div>
     );
@@ -78,18 +73,18 @@ const DeletePage = (props) => {
 
 const mapStateToProps = state => {
     return {
-      formValues: state.move,
+        move: state.move,
     };
   };
 
   const mapDispatchToProps = (dispatch) => {
     return({
-        deleteMovement: (formValues) => dispatch(deleteMovement(formValues)),
+        deleteMovement: (selectedID, formValues) => dispatch(deleteMovement(selectedID, formValues)),
     })
 };
 
-  const formWrap = reduxForm({
-    form: 'addMovementForm',
+const formWrap = reduxForm({
+    form: 'deleteMovementForm',
 })(DeletePage);
 
 export default connect(mapStateToProps, mapDispatchToProps)(formWrap);

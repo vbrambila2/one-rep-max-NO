@@ -16,8 +16,8 @@ class App extends React.Component {
                         <Route exact path="/" render={ () => <HomePage title="One Rep - Home" /> } ></Route>
                         <Route exact path="/movement/:id/:name/:weight" render={ () => <MovementPage title="One Rep - Movement" /> } ></Route>
                         <Route exact path="/add" render={ () => <AddPage title="One Rep - Add" /> } ></Route>
-                        <Route exact path="/:id" render={ () => <UpdatePage title="One Rep - Update" /> } ></Route>
-                        <Route exact path="/delete/:name" render={ () => <DeletePage title="One Rep - Delete" /> } ></Route>
+                        <Route exact path="/update/:id/:name" render={ () => <UpdatePage title="One Rep - Update" /> } ></Route>
+                        <Route exact path="/delete/:id/:name" render={ () => <DeletePage title="One Rep - Delete" /> } ></Route>
                     </Switch>
                 </Router>
             </div>

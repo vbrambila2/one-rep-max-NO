@@ -21,55 +21,56 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'right',
-      },
+    },
       movementName: {
         padding: '10px',
         margin: '10px',
-      },
+    },
       textBoxColor: {
         background: 'white',
         borderRadius: '10px',
-      },
+    },
       movementWeight: {
         margin: '10px',
         padding: '10px',
-      },
+    },
       addButton: {
           width: '50px',
           borderRadius: '10px',
           marginLeft: '95px'
-      },
+    },
 }));
+
+const renderInputName = ({ input, label, meta }) => {
+    return (
+        <div>
+            <label>{label}:   </label>
+            <input {...input} type="text" /> 
+            <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
+        </div>    
+    )  
+};
+
+const renderInputWeight = ({ input, label, meta }) => {
+    return (
+        <div>
+            <label>{label}:   </label>
+            <input {...input} type="number" /> 
+            <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
+        </div>    
+    )  
+};
+
+const renderError = ({ error, touched }) => {
+    if (touched && error ) {
+        return <div>{error}</div>
+    };
+};
 
 const AddPage = (props) => {
     const classes = useStyles();
     const onSubmit = (formValues) => {
         props.createMovement(formValues);
-    };
-    const renderInputName = ({ input, label, meta }) => {
-        return (
-            <div>
-                <label>{label}:   </label>
-                <input {...input} type="text" /> 
-                <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
-            </div>    
-        )  
-    };
-    
-    const renderInputWeight = ({ input, label, meta }) => {
-        return (
-            <div>
-                <label>{label}:   </label>
-                <input {...input} type="number" /> 
-                <div style={{fontSize: "15px", color:"red"}}>{renderError(meta)}</div>
-            </div>    
-        )  
-    };
-    
-    const renderError = ({ error, touched }) => {
-        if (touched && error ) {
-            return <div>{error}</div>
-        };
     };
 
     return (
@@ -88,7 +89,7 @@ const AddPage = (props) => {
                             component={renderInputWeight} 
                             label="One Rep Max" 
                          />
-                         <button >Submit</button>
+                         <button>Submit</button>
                     </form>
                 </div>
             </div>
@@ -104,11 +105,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return({
-        createMovement: (formValues) => dispatch(createMovement(formValues)),
+        createMovement: formValues => dispatch(createMovement(formValues)),
     })
 };
 
-const validate = (formValues) => {
+const validate = formValues => {
     const errors = {};
 
     if (!formValues.movementName) {

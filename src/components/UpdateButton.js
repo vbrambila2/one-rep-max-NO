@@ -9,27 +9,26 @@ const useStyles = makeStyles((theme) => ({
         background: '#e0e0e0',
         borderRadius: '10px',
         width: '10%',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginLeft: '5px',
+        marginRight: '5px',
     },
-    updateInput: {
-        display: 'block',
-    }
 }));
 
 const UpdateButton = (props) => {
     const classes = useStyles();
     const location = useLocation();
     const pathArray = location.pathname.split('/');
-    //const movementNameURL = (pathArray[3]);
-    const movementID = (pathArray[2]);
+    const movementIDURL = (pathArray[2]);
+    const movementNameURL = (pathArray[3]);
 
     return (
-            <Button 
-                className={classes.updateButton}
-                onClick={() => history.push(`/${movementID}`)}
-            >
-                Update
-            </Button> 
+        <Button 
+            className={classes.updateButton}
+            onClick={() => history.push(`/update/${movementIDURL}/${movementNameURL}`)}
+        >
+        Update
+        </Button> 
     )
 };
 
