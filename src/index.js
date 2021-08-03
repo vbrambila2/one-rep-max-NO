@@ -6,15 +6,40 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers';
 import reduxThunk from 'redux-thunk';
 
+function saveToLocalStorage(store) {
+   try {
+       const serializedStore = JSON.stringify(store);
+       window.localStorage.setItem('store', serializedStore);
+   } catch(e) {
+       console.log(e);
+   }
+}
+
+function loadFromLocalStorage() {
+   try {
+       const serializedStore = window.localStorage.getItem('store');
+       if(serializedStore === null) return undefined;
+       return JSON.parse(serializedStore);
+   } catch(e) {
+       console.log(e);
+       return undefined;
+   }
+}
+
+const persistedState = loadFromLocalStorage();
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(reduxThunk))
+   rootReducer,
+   persistedState,
+   composeEnhancers(applyMiddleware(reduxThunk))
 );
 
+store.subscribe(() => saveToLocalStorage(store.getState()));
+ 
 ReactDOM.render(
-    <Provider store={store} >
-        <App />
-    </Provider>,
-    document.getElementById('root')
+   <Provider store={store} >
+      <App />
+   </Provider>,
+   document.getElementById('root')
 );
