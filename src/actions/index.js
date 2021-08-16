@@ -22,3 +22,9 @@ export const deleteMovement = id => async dispatch => {
 
     dispatch({ type: constants.DELETE_MOVEMENT, payload: id })
 };
+
+export const fetchMovements = () => async dispatch => {
+    const response = await movements.get('/movements');
+
+    dispatch ({ type: constants.FETCH_MOVEMENTS, payload: response.data });
+}
