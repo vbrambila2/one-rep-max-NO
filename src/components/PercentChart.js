@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '20px',
+        padding: '10px',
         fontFamily: 'PT Sans Caption',
         fontSize: '18px',
         marginTop: '100px'
@@ -42,13 +42,18 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'space-around',
         fontFamily: 'PT Sans Caption',
     },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'center',
+        paddingBottom: '20px'
+    }
 }));
 
 const PercentChart = (props) => {
     const classes = useStyles();
     const location = useLocation();
     const pathArray = location.pathname.split('/');
-    const movementNameURL = (pathArray[2]);
+    const movementNameURL = (pathArray[3]);
     const [results, setResults] = useState([]);
     const selected = props.weight.find((e) => e.movementName === movementNameURL);
 
@@ -75,9 +80,11 @@ const PercentChart = (props) => {
         <div>
             <div className={classes.oneRepMaxWeight}>One Rep Max:
                 <div className={classes.oneRepMaxWeightNumber}>{displayWeight()}</div>
+            </div> 
+            <div className={classes.buttons}>
                 <UpdateButton />
                 <DeleteButton />
-            </div> 
+            </div>
             <div className={classes.oneRepMaxChart}>
                 <h1 className={classes.chartHeader} >Percent<div>Weight</div></h1>
                 <div>
@@ -92,7 +99,7 @@ const PercentChart = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        weight: state.move,
+        weight: Object.values(state.move),
     }
 };
 

@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
+        zIndex: 9999
     },
     homeButton: {
         boxShadow: '0px 2px 2px #A9A9A9',
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '10px',
         marginBottom: '10px',
         marginTop: '5px',
+        borderRadius: '10px'
     },
     fakeText: {
         visibility: 'hidden',

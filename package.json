@@ -1,8 +1,8 @@
 {
   "name": "one-rep-max",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://vbrambila2.github.io/one-rep-max/",
+  "private": false,
+  "homepage": "https://vbrambila2.github.io/1RM-Calculator/",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
@@ -10,6 +10,8 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
+    "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -17,6 +19,7 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
     "redux-form": "^8.3.7",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "web-vitals": "^1.1.2"
   },

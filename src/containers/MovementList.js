@@ -15,47 +15,41 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     noMovementsMessage: {
-        marginTop: '30px',
+        marginTop: '130px',
         fontFamily: 'PT Sans Caption',
         fontSize: '20px',
         textTransform: 'uppercase',
     },
-    movementButtonsDiv: {
-        marginTop: '100px'
-    },
 }));
 
-const MovementButton = (props) => {
+const MovementList = (props) => {
     const classes = useStyles();
-    const mapNames = props.movements.map((movement) => {
-        if (props.movements === "") {
-            return <div className={classes.noMovementsMessage} >Click add button to begin</div> 
-        } else 
+    const mapNames = props.move.map((movement) => {
         return (
             <Button 
                 key={movement.movementName}
                 className={classes.movementButtons} 
-                onClick={() => history.push(`/movement/${movement.movementName}/${movement.movementWeight}`)}
+                onClick={() => history.push(`/movement/${movement.id}/${movement.movementName}/${movement.movementWeight}`)}
             >
-                {movement.movementName} - {movement.newMovementWeight || movement.movementWeight}lbs
+            {movement.movementName} - {movement.movementWeight}lbs
             </Button>
-        )
-    });
+        )}
+    );
     const displayMovementButtons = () => {
         if (mapNames.length === 0) {    
-            return <div className={classes.noMovementsMessage} >Click add button to beggin</div> 
+            return <div className={classes.noMovementsMessage} >Click add button to begin</div> 
         };
 
         return <div>{mapNames}</div>
     };
 
-    return <div className={classes.movementButtonsDiv}>{displayMovementButtons()}</div>
+    return <div>{displayMovementButtons()}</div>
 };
 
 const mapStateToProps = (state) => {
     return {
-        movements: state.move
+        move: Object.values(state.move),
     }
 };
 
-export default connect(mapStateToProps)(MovementButton);
+export default connect(mapStateToProps)(MovementList);

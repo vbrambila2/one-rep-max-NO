@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { addMovement } from '../actions/index';
+import { createMovement } from '../actions/index';
 import { Field, reduxForm } from 'redux-form';
 
 const useStyles = makeStyles(() => ({
@@ -21,24 +21,24 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'right',
-      },
+    },
       movementName: {
         padding: '10px',
         margin: '10px',
-      },
+    },
       textBoxColor: {
         background: 'white',
         borderRadius: '10px',
-      },
+    },
       movementWeight: {
         margin: '10px',
         padding: '10px',
-      },
+    },
       addButton: {
           width: '50px',
           borderRadius: '10px',
           marginLeft: '95px'
-      },
+    },
 }));
 
 const renderInputName = ({ input, label, meta }) => {
@@ -70,7 +70,7 @@ const renderError = ({ error, touched }) => {
 const AddPage = (props) => {
     const classes = useStyles();
     const onSubmit = (formValues) => {
-        props.addMovement(formValues);
+        props.createMovement(formValues);
     };
 
     return (
@@ -89,7 +89,7 @@ const AddPage = (props) => {
                             component={renderInputWeight} 
                             label="One Rep Max" 
                          />
-                         <button >Submit</button>
+                         <button>Submit</button>
                     </form>
                 </div>
             </div>
@@ -97,19 +97,19 @@ const AddPage = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
-        formValues: state.move   
+        move: state.move   
     }   
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return({
-        addMovement: (formValues) => dispatch(addMovement(formValues)),
+        createMovement: formValues => dispatch(createMovement(formValues)),
     })
 };
 
-const validate = (formValues) => {
+const validate = formValues => {
     const errors = {};
 
     if (!formValues.movementName) {
