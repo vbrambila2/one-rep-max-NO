@@ -37,7 +37,7 @@ const MovementList = (props) => {
     );
     const displayMovementButtons = () => {
         if (mapNames.length === 0) {    
-            return <div className={classes.noMovementsMessage} >Click add button to beggin</div> 
+            return <div className={classes.noMovementsMessage} >Click add button to begin</div> 
         };
 
         return <div>{mapNames}</div>
